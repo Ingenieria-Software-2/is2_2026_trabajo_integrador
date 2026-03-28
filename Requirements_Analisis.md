@@ -75,7 +75,6 @@ El sistema deberá cubrir la gestión de estudiantes, docentes, materias, inscri
 
 #### Materias
 - Alta, baja y modificación
-- Definición de cupos
 - Asociación a carreras
 
 #### Correlatividades
