@@ -73,7 +73,6 @@ El sistema sigue una arquitectura **MVC (Model-View-Controller)** con separació
 ## ⚙️ Funcionalidades clave
 
 * Inscripción a materias con validación de correlativas
-* Gestión de cupos
 * Historial académico por estudiante
 * Asignación de docentes a materias
 * Consultas académicas
