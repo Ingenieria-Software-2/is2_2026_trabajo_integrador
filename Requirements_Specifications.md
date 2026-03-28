@@ -143,7 +143,6 @@ El sistema deberá:
 ### 3.1.4 Gestión de Materias
 
 - **RF-12**: El sistema deberá permitir crear, modificar y eliminar materias.
-- **RF-13**: El sistema deberá definir cupos para cada materia.
 
 ---
 
@@ -157,7 +156,6 @@ El sistema deberá:
 ### 3.1.6 Inscripciones y Cursadas
 
 - **RF-16**: El sistema deberá permitir a los estudiantes inscribirse a materias.
-- **RF-17**: El sistema deberá validar disponibilidad de cupos.
 - **RF-18**: El sistema deberá registrar las cursadas activas.
 - **RF-19**: El sistema deberá permitir cancelar una inscripción.
 

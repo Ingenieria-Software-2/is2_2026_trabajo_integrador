@@ -160,7 +160,7 @@ El sistema deberá cubrir la gestión de estudiantes, docentes, materias, inscri
 
 ## 7. Plazo Estimado
 
-- A definir
+- 3 Meses (Duración de la materia)
 
 ---
 
