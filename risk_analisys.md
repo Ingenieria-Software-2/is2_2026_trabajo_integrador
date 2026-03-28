@@ -56,3 +56,17 @@ El mayor riesgo del sistema se concentra en:
 - **Lógica de negocio compleja (correlatividades e inscripciones)**
 - **Diseño arquitectónico inicial**
 - **Gestión del tiempo en un equipo pequeño**
+
+## 📋 Tabla de Riesgos identificados por el equipo
+
+| ID | Tipo | Riesgo | Probabilidad | Impacto | Nivel |
+|----|------|--------|--------------|---------|-------|
+| T1 | Técnico | Curva de aprendizaje de nuevas librerías | Media | Alto | 🟠 Medio |
+| T2 | Técnico | Dificultad de comprobación de correlativas | Alta | Alto | 🔴 Alto |
+| O1 | Organizacional | Pérdida de un miembro del equipo | Baja | Alto | 🟠 Medio |
+| O2 | Organizacional | Falta de experiencia | Alta | Medio | 🟠 Medio |
+| P1 | Planificación | Subestimación del esfuerzo | Alta | Alto | 🔴 Alto |
+| P2 | Planificación | Cambios de alcance | Alta | Alto | 🔴 Alto |
+| H1 | Humano | Falta de motivación | Media | Medio | 🟠 Medio |
+| H2 | Humano | Curva de aprendizaje | Alta | Alto | 🔴 Alto |
+
