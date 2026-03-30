@@ -63,15 +63,17 @@ El mayor riesgo del sistema se concentra en:
 |----|------|--------|--------------|---------|-------|
 | T1 | Técnico | Curva de aprendizaje de nuevas librerías | Media | Alto | 🟠 Medio |
 | T2 | Técnico | Dificultad de comprobación de correlativas | Alta | Alto | 🔴 Alto |
+| T3 | Técnico | Posibilidad de que un usuario no administrativo tenga permiso a modificar o acceder a información crítica.| Media | Alto | 🔴 Alto |
+| T4 | Técnico | Fallo de la aplicación por ingreso excesivo de usuarios | Alta | Alto | 🔴 Alto |
 | O1 | Organizacional | Pérdida de un miembro del equipo | Baja | Alto | 🟠 Medio |
 | O2 | Organizacional | Falta de experiencia | Alta | Medio | 🟠 Medio |
 | O3 | Organizacional | Incorporacion de miembro con proyecto empezado | Medio | Alto | 🟠 Medio |
+| O4 | Organizacional | Falta de comunicación entre StakeHolders, a la hora de tomar requerimientos algunos de los implicados pueden ser docentes/no docentes.Para un entendimiento correcto de las funcionalidades del sistema, por ejemplo la validación de correlativas es necesario un comunicación fluida con los StakeHolders de la institución | Alto | Alta | 🟠 Medio |
 | P1 | Planificación | Subestimación del esfuerzo | Alta | Alto | 🔴 Alto |
 | P2 | Planificación | Cambios de alcance | Alta | Alto | 🔴 Alto |
+| P3 | Planificación | OverEngineering (SobreIngeniera), utilización de tecnologiás (lenguages,frameworks) que implican una arquitectura demasiado compleja con respecto al objetivo del sistema en el tiempo que se estima su entrega | Media | Alto |  🔴 Alto |
+| P4 | Planificación | La perdida de un miembro implica la reestructuración de las asignaciones de las tareas | Medio | Medio | 🟠 Medio |  
 | H1 | Humano | Falta de motivación | Media | Medio | 🟠 Medio |
 | H2 | Humano | Curva de aprendizaje | Alta | Alto | 🔴 Alto |
-| T3 | Técnico | Posibilidad de que un usuario no administrativo tenga permiso a modificar o acceder a información crítica.| Media | Alto | 🔴 Alto |
-| T4 | Técnico | Fallo de la aplicación por ingreso excesivo de usuarios | Alta | Alto | 🔴 Alto |
-| P3 | Planificación | OverEngineering (SobreIngeniera), utilización de tecnologiás (lenguages,frameworks) que implican una arquitectura demasiado compleja con respecto al objetivo del sistema en el tiempo que se estima su entrega | Media | Alto |  🔴 Alto |
-| O4 | Organizacional | Falta de comunicación entre StakeHolders, a la hora de tomar requerimientos algunos de los implicados pueden ser docentes/no docentes.Para un entendimiento correcto de las funcionalidades del sistema, por ejemplo la validación de correlativas es necesario un comunicación fluida con los StakeHolders de la institución | Alto | Alta | 🟠 Medio |
-| P4 | Planificación | La perdida de un miembro implica la reestructuración de las asignaciones de las tareas | Medio | Medio | 🟠 Medio |  
+
+
