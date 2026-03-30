@@ -71,6 +71,7 @@ El mayor riesgo del sistema se concentra en:
 | H1 | Humano | Falta de motivación | Media | Medio | 🟠 Medio |
 | H2 | Humano | Curva de aprendizaje | Alta | Alto | 🔴 Alto |
 | T3 | Técnico | Posibilidad de que un usuario no administrativo tenga permiso a modificar o acceder a información crítica.| Media | Alto | 🔴 Alto |
+| T4 | Tecnico | Fallo de la aplicacion por ingreso excesivo de usuarios | Alta | Alto | 🔴 Alto |
 | P3 | Planificación | OverEngineering (SobreIngeniera), utilización de tecnologiás (lenguages,frameworks) que implican una arquitectura demasiado compleja con respecto al objetivo del sistema en el tiempo que se estima su entrega | Media | Alto |  🔴 Alto |
 | O4 | Organizacional | Falta de comunicación entre StakeHolders, a la hora de tomar requerimientos algunos de los implicados pueden ser docentes/no docentes.Para un entendimiento correcto de las funcionalidades del sistema, por ejemplo la validación de correlativas es necesario un comunicación fluida con los StakeHolders de la institución | Alto | Alta | 🟠 Medio |
-| P4 | Planificación | La perdida de un miembro implica la reestructuración de las asignaciones de las tareas | Medio | Medio | 🟠 Medio | 
+| P4 | Planificación | La perdida de un miembro implica la reestructuración de las asignaciones de las tareas | Medio | Medio | 🟠 Medio |  
