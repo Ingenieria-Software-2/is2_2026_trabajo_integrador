@@ -1,5 +1,9 @@
-#Prompts utilizados en análisis de requerimientos y riesgos del sistema
-1)Estamos creando un sistema para la gestión de docentes y alumnos de la universidad, te presentaré el problema para entender el contexto, luego haremos
+# Prompts utilizados en análisis de requerimientos y riesgos del sistema
+
+## 1) Introducción del contexto y obtención del Requirements_Analysis.md
+
+*Inicio del prompt*
+Estamos creando un sistema para la gestión de docentes y alumnos de la universidad, te presentaré el problema para entender el contexto, luego haremos
 un analisis de requerimientos.
 La oficina de alumnos enfrenta dificultades por el uso de sistemas viejos, planillas y
 procesos manuales. Necesitan centralizar la información académica para mejorar la
@@ -15,9 +19,13 @@ estudio y correlatividades. También hay que procurar automatizar la validación
 requisitos de inscripción, llevar un historial académico de cada estudiante, gestionar la
 asignación de docentes y roles en cada cátedra e incluir una herramienta de seguimiento
 de progreso estudiantil. Los principales actores del sistema involucran a docentes,
-administradores y alumnos. (Iteración 1 de Requirements_Analysis.md)
+administradores y alumnos.
+*Fin del prompt*
 
-2)Bien me interesa un SRS , pero antes vamos a iterar sobre los puntos que destacan sobre el proyecto te pasaré mas contexto para ver si hay que modificar o agregar más informacion en el .md que ya tenemos.
+## 2) Iteración 1 sobre Requirements_Analysis.md
+
+*Inicio del prompt*
+Bien me interesa un SRS , pero antes vamos a iterar sobre los puntos que destacan sobre el proyecto te pasaré mas contexto para ver si hay que modificar o agregar más informacion en el Requirements_Analysis.md que ya tenemos.
 Narrativa: Entrevista con la Oficina de Alumnos
 Imaginemos la siguiente situación: tu equipo de desarrollo ha sido contactado por la
 Oficina de Alumnos de la Universidad, que busca modernizar y optimizar la gestión
@@ -49,10 +57,13 @@ podríamos ofrecerles algún programa especial. No sabemos exactamente cómo
 sería, pero creemos que un sistema podría ayudarnos."
 " Los principales usuarios de este sistema serían: el personal de la Oficina de
 Alumnos, como administradores; los estudiantes, para consultar su información; y
-los profesores, para cargar notas o consultar listados de sus alumnos." (Iteración 2 sobre Requirements_Analysis)
+los profesores, para cargar notas o consultar listados de sus alumnos." 
+*Fin del Prompt*
 
-3)Obtener un documento SRS formal con las especificaciones de los requerimientos obtenidos en los análisis previos.Te comparto algunas historias de usuarios
-que entrevistamos para especificar funcionalidades:
+## 3)Iteración sobre contexto y obtención de Requirements_Specifications.md
+*Inicio del prompt*
+Obtener un documento SRS formal con las especificaciones de los requerimientos obtenidos en los análisis previos. Te comparto algunas historias de
+usuarios que entrevistamos para especificar funcionalidades puntuales:
 Historias de Alumno:
 1- "Como Alumno quiero consultar mi historial académico (materias que curso/notas)
 para tener un seguimiento de mi progreso estudiantil."
@@ -68,199 +79,43 @@ notificar cambios en la materia (parciales, horarios, aulas, consultas).”
 3- ”Como profesor, quiero acceder a la información académica de mis alumnos, para
 verificar si cumplen con los requisitos para cursar o rendir un examen.”
 4- “Como profesor, quiero cargar material en cada materia sin restricciones, para que
-mis alumnos sigan el programa de estudio de manera adecuada.”(Obtención de Requirements_Specifications.md"
+mis alumnos sigan el programa de estudio de manera adecuada.”
+*Fin del prompt*
 
-4) ¿Qué es IEEE 830 / ISO/IEC/IEEE 29148? (Consulta basada en el formato del resultado de Prompt 3.)
-5) El proyecto tendrá una pagina web con frontend y un servidor con base de datos en el backend. Yo estoy familiarizado con React Vite
+## 4) Consulta basada en el formato del resultado de Prompt 3.
+*Inicio del prompt*
+¿Qué es IEEE 830 / ISO/IEC/IEEE 29148?
+*Fin del prompt*
+
+## 5) Consulta sobre framework/tecnologías a utilizar, descartamos shiftear a React para el frontend y asi evitar OverEngineering 
+
+*Inicio del prompt*
+El proyecto tendrá una pagina web con frontend y un servidor con base de datos en el backend. Yo estoy familiarizado con React Vite
 para el frontend, ahora mi pregunta es para el backend.¿Con que lenguage/framework me recomiendas trabajar? tiene que ser Orientado a Objetos,
-estoy familiarizado con Java pero quiero saber que posibilidades hay y cuales son las ventajas de cada una.
-6)El proyecto tuvo una implementación inicial con Java+Mustache+Maven. Estoy familiarizado con Java y Maven pero no con Mustache. Me explicas un poco que es?
-Es conveniente shiftear a otro framework para el frontend como React? (Descartamos shiftear a React para evitar OverEngineering) 
-7) Dame un README Simple y llamativo para el repositorio de este proyecto (Obtención de README básico que fue modificado posteriormente por los miembros del equipo).
-8) Necesito un analisis de riesgos  en base al siguiene analisis de requerimientos del sistema, considerar los siguientes tipos de riesgos:
+estoy familiarizado con Java pero quiero saber que posibilidades hay y cuales son las ventajas de cada una. ¿Es conveniente shiftear a otro framework
+para el frontend como React?
+*Fin del prompt*
+
+## 6) Constulta sobre framework de Java + Mustache
+
+*Inicio del prompt*
+El proyecto tuvo una implementación inicial con Java+Mustache+Maven. Estoy familiarizado con Java y Maven pero no con Mustache. ¿Me explicas un poco
+que es?
+*Fin del prompt*
+
+## 7) Obtencion de README.md báisco para presentación de proyecto en GitHub 
+### (El REARME.md fue modificado posteriormente por los miembros del equipo).
+
+*Inicio del prompt*
+Dame un README Simple y llamativo para el repositorio de este proyecto.
+*Fin del prompt*
+## 8) Iteración 2 sobre Requirements_Analisis.md y obtención de risk_analisys.md 
+### (El risk_analysis.md fue modificado posteriormente para agregar los riesgos identificados por el equipo).
+
+*Inicio del prompt*
+Necesito un analisis de riesgos  en base al siguiene analisis de requerimientos del sistema, considerar los siguientes tipos de riesgos:
 - Riesgos técnicos -Riesgos organizacionales - Riesgos de planificación - Riesgos humanos.
 Clasifícar por probabilidad e impacto.
-# Requerimientos del Sistema
-
-## 1. Problema a Resolver
-
-Actualmente, la gestión académica de la universidad presenta múltiples inconvenientes:
-
-- Uso de **planillas y sistemas aislados**
-- Falta de **integración entre módulos**
-- Procesos **manuales y propensos a errores**
-- Dificultad para validar:
-  - Correlatividades
-  - Inscripciones
-- Baja **transparencia** para estudiantes y docentes
-- Comunicación ineficiente entre actores
-
-### Objetivo del sistema
-
-Diseñar e implementar una plataforma web que permita gestionar la información académica de forma:
-
-- Centralizada
-- Consistente
-- Segura
-- Escalable
-- Fácil de usar
-
-El sistema deberá cubrir la gestión de estudiantes, docentes, materias, inscripciones y desempeño académico.
-
----
-
-## 2. Usuarios del Sistema
-
-### 2.1 Estudiante
-- Consulta de información académica
-- Inscripción a materias
-- Visualización de historial y progreso
-
-### 2.2 Profesor
-- Consulta de materias asignadas
-- Visualización de alumnos
-- Carga de notas
-
-### 2.3 Administrador Académico
-- Gestión integral del sistema
-- Administración de datos académicos
-
----
-
-## 3. Funcionalidades
-
-### 3.1 Gestión de Estudiantes
-- Registro de datos personales
-- Información de contacto
-- Estado académico (ingresante / avanzado)
-- Consulta de historial académico
-- Visualización de materias cursadas y aprobadas
-
----
-
-### 3.2 Gestión de Docentes
-- Registro de docentes
-- Asignación a materias
-- Definición de rol docente:
-  - Responsable de cátedra
-  - JTP
-  - Ayudante
-
----
-
-### 3.3 Gestión Académica
-
-#### Carreras y Planes de Estudio
-- Definición de carreras
-- Gestión de planes de estudio
-- Asociación de materias a planes
-
-#### Materias
-- Alta, baja y modificación
-- Asociación a carreras
-
-#### Correlatividades
-- Definición de requisitos entre materias
-- Validación automática al momento de inscripción
-
----
-
-### 3.4 Inscripciones y Cursadas
-- Inscripción a materias
-- Validación de:
-  - Correlativas
-  - Cupos
-- Registro de cursadas activas
-- Consulta de estado de inscripción
-
----
-
-### 3.5 Gestión de Notas
-- Registro de notas finales
-- Historial académico del estudiante
-- Consulta de rendimiento
-
----
-
-### 3.6 Asignación Académica
-- Asignación de docentes a materias
-- Asociación a períodos académicos
-
----
-
-### 3.7 Consultas
-- Materias disponibles
-- Materias cursadas
-- Listado de alumnos por materia
-- Información académica del estudiante
-
----
-
-### 3.8 Funcionalidades Futuras (No Funcionales / Analítica)
-- Seguimiento de progreso académico
-- Detección de riesgo de abandono
-- Identificación de estudiantes destacados
-
----
-
-## 4. Restricciones Técnicas
-
-- Backend orientado a objetos (requisito académico)
-- Arquitectura cliente-servidor
-- Persistencia en base de datos relacional
-- Aplicación web
-
----
-
-## 5. Tamaño del Equipo
-
-- 4 Integrantes en el momento que se escribe este documento.
-
----
-
-## 6. Tecnologías Elegidas y Justificación
-
-### Frontend
-**Java+Mustache**
-- Motor de plantillas
-- HTML dinámico a partir de templates+datos
-- Arquitectura de vistas separadas de lógica backend
-### Backend
-**Java + Maven**
-- Orientado a objetos
-- Fuertemente tipado
-- Conservación de tecnologías usadas en IS-I
-- Integración con BD
-
-### Base de Datos
-**SQLite**
-- Adecuada para proyectos académicos
-- Relacional
-- Adecuada para integridad referencial
-
----
-
-## 7. Plazo Estimado
-
-- 3 Meses (Duración de la materia)
-
----
-
-## 8. Cambios de Alcance
-
-- Evolutivo durante el desarrollo
-
----
-
-## 9. Problemas Encontrados
-
-- Se documentarán durante el proceso
-
----
-
-## 10. Organización del Equipo
-
-- Metodología Kanban
-- Uso de Git
-- Gestión mediante Issues
-- Trazabilidad mediante SRS
+**Aquí se introdujo la ultima versión del Requirements_Analysis.md para una iteración directa con el con
+texto ya desarrollado (Ver Requirements_Analysis.md)**
+*Fin del Prompt*
