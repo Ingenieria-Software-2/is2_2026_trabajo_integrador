@@ -1,4 +1,4 @@
-:::: mermaid
+``` mermaid
 flowchart TD
     UI["Interfaz de Usuario"]
 
@@ -49,4 +49,4 @@ flowchart TD
     S5 --> DB
     S6 --> DB
 
-::::
+```
