@@ -1,4 +1,4 @@
-:::: mermaid
+``` mermaid
 classDiagram
     class Persona {
         +String dni
@@ -80,4 +80,4 @@ classDiagram
     %% Relación de Inscripción en Carreras
     Estudiante "1" -- "1..*" Inscripcion
     Inscripcion "*" -- "1" Carrera
-::::
+```
