@@ -33,7 +33,7 @@ COPY --from=build /app/target/proye-is-1.0-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Variable de entorno para apuntar la BD al volumen montado
-ENV db.url=jdbc:sqlite:/app/db/dev.db
+ENV db_url=jdbc:sqlite:/app/db/dev.db
 
 # Comando de arranque
-ENTRYPOINT ["java", "-Ddb.url=${db.url}", "-jar", "app.jar"]
+ENTRYPOINT java -Ddb.url=$db_url -jar app.jar
