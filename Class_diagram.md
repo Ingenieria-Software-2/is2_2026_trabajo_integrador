@@ -26,6 +26,9 @@ classDiagram
         +Date fecha_inicio
         +Date fecha_fin
     }
+    class Inscripcion_Materia {
+        +Date fecha
+    }
     class Examen {
         +Date fecha
         +Float nota
@@ -61,7 +64,8 @@ classDiagram
     Estudiante --|> Persona
 
     %% Relaciones
-    Estudiante "*" -- "*" Materia : cursando
+    Estudiante "1" -- "*" Inscripcion_Materia
+    Inscripcion_Materia "*" -- "1" Materia
     Plan_Estudio "1..*" *-- "1..*" Materia
     Carrera "1" -- "1..*" Plan_Estudio
 
