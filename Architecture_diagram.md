@@ -1,6 +1,6 @@
-# Arquitectura del sistema universitario
+# University System Architecture
 
-## Capa HTTP y lógica de negocio
+## HTTP Layer and Business Logic
 
 ```mermaid
 flowchart TD
@@ -12,16 +12,16 @@ flowchart TD
     end
 
     subgraph CONTROLLERS ["Controllers"]
-        UC["UserController\nHTTP, sesión, redirect"]
+        UC["UserController\nHTTP, session, redirect"]
         PC["ProfessorController\nHTTP, redirect"]
     end
 
     subgraph SERVICES ["Services"]
-        US["UserService\nLogin, registro, BCrypt"]
-        PS["ProfessorService\nValidación, unicidad"]
+        US["UserService\nLogin, register, BCrypt"]
+        PS["ProfessorService\nValidation, uniqueness"]
     end
 
-    SE["ServiceException\nErrores de negocio"]
+    SE["ServiceException\nBusiness errors"]
 
     Browser --> UR
     Browser --> PR
@@ -33,7 +33,7 @@ flowchart TD
     PS --> SE
 ```
 
-## Capa de persistencia
+## Persistence Layer
 
 ```mermaid
 flowchart TD
@@ -43,18 +43,18 @@ flowchart TD
     end
 
     subgraph MODELS ["Models (ActiveJDBC)"]
-        MU["User\ntabla users"]
-        MP["Person\ntabla persons"]
-        MPR["Professor\ntabla professors"]
+        MU["User\ntable users"]
+        MP["Person\ntable persons"]
+        MPR["Professor\ntable professors"]
     end
 
-    subgraph FILTERS ["Filtros Spark (App.java)"]
-        BF["before\nabre conexión"]
-        AF["after\ncierra conexión"]
+    subgraph FILTERS ["Spark Filters (App.java)"]
+        BF["before\nopen conection"]
+        AF["after\nclose conection"]
     end
 
     DB["DBConfigSingleton\nopenConnection / closeConnection"]
-    SQLite["SQLite\ndb/dev.db — volumen Docker"]
+    SQLite["SQLite\ndb/dev.db — Docker volume"]
 
     US --> MU
     PS --> MP
