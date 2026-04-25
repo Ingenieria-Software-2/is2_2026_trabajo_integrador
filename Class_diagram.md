@@ -1,87 +1,87 @@
 ``` mermaid
 classDiagram
-    class Persona {
-        +String dni
-        +String nombre
-        +String apellido
-        +String celular
-        +Date fecha_nacimiento
+    class Person {
+        +String id
+        +String name
+        +String surname
+        +String cellphone
+        +Date birthdate
     }
-    class Docente {
-        +String titulo
-        +String universidad_grad
-        +String cargo
+    class Professor {
+        +String degree
+        +String graduate_univ
+        +String position
     }
-    class Estudiante {
-        +String localidad_nac
-        +String localidad_res
-        +String familiar_contacto
-        +String cel_contacto
+    class Student {
+        +String birthplace
+        +String town_of_residence
+        +String contact_relative
+        +String contact_cellphone
     }
-    class Administrador {
-        +String nombre_usuario
+    class Administrator {
+        +String username
         +String email
     }
-    class Periodo {
-        +Date fecha_inicio
-        +Date fecha_fin
+    class Period {
+        +Date start_date
+        +Date end_date
     }
-    class Inscripcion_Materia {
-        +Date fecha
+    class Registration_Subject {
+        +Date date
     }
-    class Examen {
-        +Date fecha
-        +Float nota
+    class Exam {
+        +Date date
+        +Float grade
     }
-    class Carrera {
-        +String nombre
+    class Degree {
+        +String name
     }
-    class Inscripcion {
-        +Date fecha
+    class Registration_Degree {
+        +Date date
     }
-    class Materia {
-        +int codigo
-        +String nombre
-        +String programa
-        +int horas
+    class Subject {
+        +int code
+        +String name
+        +String course_syllabus
+        +int hours
     }
-    class Plan_Estudio {
+    class Study_Plan {
         +String version
         +String plan
     }
-    class Requisito {
-        Condicion condicion
+    class Requirement {
+        Condition condition
     }
-    class Condicion {
+    class Condition {
         <<enumeration>>
         REGULAR
-        APROBADO
+        APPROVED
     }
 
-    %% Herencia
-    Administrador --|> Persona
-    Docente --|> Persona
-    Estudiante --|> Persona
+    %% Inheritance
+    Administrator --|> Person
+    Professor --|> Person
+    Student --|> Person
 
-    %% Relaciones
-    Estudiante "1" -- "*" Inscripcion_Materia
-    Inscripcion_Materia "*" -- "1" Materia
-    Plan_Estudio "1..*" *-- "1..*" Materia
-    Carrera "1" -- "1..*" Plan_Estudio
+    %% Degree Relationships
+    Study_Plan "1..*" *-- "1..*" Subject
+    Degree "1" -- "1..*" Study_Plan
 
-    %% Relación de Docentes/Materias
-    Docente "1" -- "1..*" Periodo
-    Periodo "1..*" -- "1" Materia
+    %% Professor-Subject Relationships
+    Professor "1" -- "1..*" Period
+    Period "1..*" -- "1" Subject
 
-    %% Relación Materias rendidas
-    Estudiante "1" -- "*" Examen
-    Examen "*" -- "1" Materia
+    %% Student-Subject Relationships
+    Student "1" -- "*" Registration_Subject
+    Registration_Subject "*" -- "1" Subject
+    Student "1" -- "*" Exam
+    Exam "*" -- "1" Subject
     
-    %% Relación de Correlatividades
-    Materia "1" -- "*" Requisito
-    Requisito "*" -- "1" Materia
+    %% Correlation Relationship
+    Subject "1" -- "*" Requirement
+    Requirement "*" -- "1" Subject
 
-    %% Relación de Inscripción en Carreras
-    Estudiante "1" -- "1..*" Inscripcion
-    Inscripcion "*" -- "1" Carrera
+    %% Student-Degree Relationship
+    Student "1" -- "1..*" Registration_Degree
+    Registration_Degree "*" -- "1" Degree
 ```
