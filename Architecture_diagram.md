@@ -1,52 +1,69 @@
-``` mermaid
+# University System Architecture
+
+## HTTP Layer and Business Logic
+
+```mermaid
 flowchart TD
-    UI["Interfaz de Usuario"]
+    Browser["Browser\nMustache templates"]
 
-    subgraph S1 ["Gestión de Administradores"]
-        CU["Crear Usuario"]
-        EU["Editar Usuario"]
+    subgraph ROUTES ["Routes"]
+        UR["UserRoutes\n/, /login, /dashboard..."]
+        PR["ProfessorRoutes\n/professor/create..."]
     end
 
-    subgraph S2 ["Gestión de Docentes"]
-        CD["Crear Docente"]
-        ED["Editar Docente"]
-
+    subgraph CONTROLLERS ["Controllers"]
+        UC["UserController\nHTTP, session, redirect"]
+        PC["ProfessorController\nHTTP, redirect"]
     end
 
-    subgraph S3 ["Gestión de Estudiantes"]
-        CE["Crear Estudiante"]
-        EE["Editar Estudiante"]
+    subgraph SERVICES ["Services"]
+        US["UserService\nLogin, register, BCrypt"]
+        PS["ProfessorService\nValidation, uniqueness"]
     end
 
-    subgraph S4 ["Gestión de Materias"]
-        CM["Crear Materia"]
-        EM["Editar Materia"]
+    SE["ServiceException\nBusiness errors"]
+
+    Browser --> UR
+    Browser --> PR
+    UR --> UC
+    PR --> PC
+    UC --> US
+    PC --> PS
+    US --> SE
+    PS --> SE
+```
+
+## Persistence Layer
+
+```mermaid
+flowchart TD
+    subgraph SERVICES ["Services"]
+        US["UserService"]
+        PS["ProfessorService"]
     end
 
-    subgraph S5 ["Gestión de Carreras"]
-        CC["Crear Carrera"]
-        EC["Editar Carrera"]
+    subgraph MODELS ["Models (ActiveJDBC)"]
+        MU["User\ntable users"]
+        MP["Person\ntable persons"]
+        MPR["Professor\ntable professors"]
     end
 
-    subgraph S6["Gestión de Planes de Estudio"]
-        CPE["Crear Plan de Estudio"]
-        EPE["Editar Plan de Estudio"]
+    subgraph FILTERS ["Spark Filters (App.java)"]
+        BF["before\nopen conection"]
+        AF["after\nclose conection"]
     end
 
-    DB["Base de Datos"]
+    DB["DBConfigSingleton\nopenConnection / closeConnection"]
+    SQLite["SQLite\ndb/dev.db — Docker volume"]
 
-    UI --> S1
-    UI --> S2
-    UI --> S3
-    UI --> S4
-    UI --> S5
-    UI --> S6
-
-    S1 --> DB
-    S2 --> DB
-    S3 --> DB
-    S4 --> DB
-    S5 --> DB
-    S6 --> DB
+    US --> MU
+    PS --> MP
+    PS --> MPR
+    MU --> DB
+    MP --> DB
+    MPR --> DB
+    BF --> DB
+    AF --> DB
+    DB --> SQLite
 
 ```
