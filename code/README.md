@@ -18,3 +18,7 @@ sudo docker compose up --build
 *Ver logs de contenedores (tracking de actividad basicamente)*
 
 docker compose logs -f
+
+*Estado de los contenedores*
+
+docker compose ps
