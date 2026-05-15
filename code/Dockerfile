@@ -36,4 +36,4 @@ EXPOSE 8080
 ENV db_url=jdbc:sqlite:/app/db/dev.db
 
 # Comando de arranque
-ENTRYPOINT java -Ddb.url=$db_url -jar app.jar
+ENTRYPOINT ["sh", "-c", "java -Ddb.url=$db_url -jar app.jar"]

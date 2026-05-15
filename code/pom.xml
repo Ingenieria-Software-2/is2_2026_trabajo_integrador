@@ -24,7 +24,12 @@
             <artifactId>spark-core</artifactId>
             <version>2.9.4</version>
         </dependency>
-
+        <!-- Ver logs de docker -->
+        <dependency>
+        <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.6</version>
+        </dependency>
         <!-- Mustache: motor de plantillas -->
         <dependency>
             <groupId>com.sparkjava</groupId>
