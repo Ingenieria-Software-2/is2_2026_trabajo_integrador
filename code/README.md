@@ -8,6 +8,13 @@ docker build -t proye-is .
 
 docker run -p 8080:8080 -v $(pwd)/db:/app/db proye-is
 
+o
+
+sudo docker compose up --build
+
 *corriendo en localhost:8080*
 
 
+*Ver logs de contenedores (tracking de actividad basicamente)*
+
+docker compose logs -f
