@@ -25,7 +25,15 @@ public class UserController {
         this.userService = userService;
         this.templateEngine = templateEngine;
     }
-
+    //--------------------------------------------------------------
+    // GET /user CreatedMuesrta el mensaje de exito al crear usuario
+    //---------------------------------------------------------------
+    public String showCreatedSuccess(Request req, Response res) {
+    String name = req.queryParams("name");
+    Map<String, Object> model = new HashMap<>();
+    model.put("name", name != null ? name : "Usuario");
+    return templateEngine.render(new ModelAndView(model, "user-created"));
+}
     // -----------------------------------------------------------
     // GET /user/create — muestra el formulario de registro
     // -----------------------------------------------------------
@@ -69,25 +77,22 @@ public class UserController {
     // POST /user/new — procesa el registro
     // -----------------------------------------------------------
     public String create(Request req, Response res) {
-        UserCreateDTO dto = new UserCreateDTO();
-        dto.name     = req.queryParams("name");
-        dto.password = req.queryParams("password");
+    UserCreateDTO dto = new UserCreateDTO();
+    dto.name     = req.queryParams("name");
+    dto.password = req.queryParams("password");
 
-        try {
-            userService.createUser(dto);
-            res.status(201);
-            res.redirect("/user/create?message="
-                + encode("Cuenta creada exitosamente para " + dto.name + "!"));
+    try {
+        userService.createUser(dto);
+        res.redirect("/user/created?name=" + encode(dto.name));
 
-        } catch (ServiceException e) {
-            res.status(e.getStatusCode());
-            res.redirect("/user/create?error=" + encode(e.getMessage()));
+    } catch (ServiceException e) {
+        res.status(e.getStatusCode());
+        res.redirect("/user/create?error=" + encode(e.getMessage()));
 
-        } catch (Exception e) {
-            res.status(500);
-            res.redirect("/user/create?error="
-                + encode("Error interno. Intente de nuevo."));
-        }
+    } catch (Exception e) {
+        res.status(500);
+        res.redirect("/user/create?error=" + encode("Error interno. Intente de nuevo."));
+    }
 
         return "";
     }
