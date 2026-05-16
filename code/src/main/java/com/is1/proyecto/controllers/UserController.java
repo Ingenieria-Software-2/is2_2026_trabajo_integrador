@@ -32,7 +32,7 @@ public class UserController {
     String name = req.queryParams("name");
     Map<String, Object> model = new HashMap<>();
     model.put("name", name != null ? name : "Usuario");
-    return templateEngine.render(new ModelAndView(model, "user-created"));
+    return templateEngine.render(new ModelAndView(model, "user_created.mustache"));
 }
     // -----------------------------------------------------------
     // GET /user/create — muestra el formulario de registro
@@ -77,12 +77,14 @@ public class UserController {
     // POST /user/new — procesa el registro
     // -----------------------------------------------------------
     public String create(Request req, Response res) {
-    UserCreateDTO dto = new UserCreateDTO();
-    dto.name     = req.queryParams("name");
-    dto.password = req.queryParams("password");
+        UserCreateDTO dto = new UserCreateDTO();
+        dto.name     = req.queryParams("name");
+        dto.password = req.queryParams("password");
 
     try {
         userService.createUser(dto);
+        req.session(true).attribute("currentUserUsername", dto.name);
+        req.session().attribute("loggedIn", true);
         res.redirect("/user/created?name=" + encode(dto.name));
 
     } catch (ServiceException e) {
