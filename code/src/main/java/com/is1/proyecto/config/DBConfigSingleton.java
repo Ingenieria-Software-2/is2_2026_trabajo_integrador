@@ -29,14 +29,24 @@ public final class DBConfigSingleton {
         return instance;
     }
 
-    // Métodos para abrir y cerrar la conexión
+    // Métodos para abrir y cerrar la conexión (chequea si no hay un thread ya abierto)
     public void openConnection() {
-        // Utiliza los valores de las propiedades de la clase para abrir la conexión
-        Base.open(this.driver, this.dbUrl, this.user, this.pass);
+
+        if (!Base.hasConnection()) {
+
+            Base.open(
+                this.driver,
+                this.dbUrl,
+                this.user,
+                this.pass
+            );
+        }
     }
 
     public void closeConnection() {
-        Base.close();
+        if (Base.hasConnection()) {
+            Base.close();
+        }
     }
 
     // Getters existentes

@@ -39,18 +39,25 @@ public class App {
     // Usa los métodos ya definidos en DBConfigSingleton.
     // -----------------------------------------------------------
     private static void configureFilters(DBConfigSingleton dbConfig) {
+
         before((req, res) -> {
             try {
                 dbConfig.openConnection();
             } catch (Exception e) {
                 System.err.println("Error al abrir conexión: " + e.getMessage());
-                halt(500, "{\"error\": \"Error interno: fallo al conectar a la base de datos.\"}");
+
+                halt(500,
+                    "{\"error\": \"Error interno: fallo al conectar a la base de datos.\"}");
             }
         });
 
-        after((req, res) -> {
+        afterAfter((req, res) -> {
             try {
-                dbConfig.closeConnection();
+
+                if (Base.hasConnection()) {
+                    dbConfig.closeConnection();
+                }
+
             } catch (Exception e) {
                 System.err.println("Error al cerrar conexión: " + e.getMessage());
             }

@@ -20,6 +20,7 @@ public class UserRoutes {
     public void register() {
         get("/",              controller::showLoginForm);
         get("/user/create",   controller::showCreateForm);
+        get("/user/created",  controller::showCreatedSuccess);
         get("/dashboard",     controller::showDashboard);
         get("/logout",        controller::logout);
         post("/user/new",     controller::create);
