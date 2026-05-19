@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS users;
 -- =============================================================
 CREATE TABLE persons (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    dni         TEXT    NOT NULL UNIQUE,
+    dni         INTEGER    NOT NULL UNIQUE,
     name        TEXT    NOT NULL,
     surname     TEXT    NOT NULL,
     username    TEXT    NOT NULL UNIQUE,
