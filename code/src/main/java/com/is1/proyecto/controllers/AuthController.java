@@ -2,9 +2,9 @@ package com.is1.proyecto.controllers;
 
 import com.is1.proyecto.models.User;
 import com.is1.proyecto.services.ServiceException;
-import com.is1.proyecto.services.UserService;
-import com.is1.proyecto.services.dto.UserCreateDTO;
-import com.is1.proyecto.services.dto.UserLoginDTO;
+import com.is1.proyecto.services.AuthService;
+import com.is1.proyecto.services.dto.PersonCreateDTO;
+import com.is1.proyecto.services.dto.PersonLoginDTO;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,14 +15,14 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserController {
+public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
     private final MustacheTemplateEngine templateEngine;
 
-    public UserController(UserService userService,
+    public AuthController(AuthService authService,
                           MustacheTemplateEngine templateEngine) {
-        this.userService = userService;
+        this.authService = authService;
         this.templateEngine = templateEngine;
     }
     //--------------------------------------------------------------
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     // -----------------------------------------------------------
-    // GET / — muestra el formulario de login
+    // GET / — muestra el formulario de login Crear Controlador para vistas que no necesitan req res...
     // -----------------------------------------------------------
     public String showLoginForm(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
@@ -77,12 +77,12 @@ public class UserController {
     // POST /user/new — procesa el registro
     // -----------------------------------------------------------
     public String create(Request req, Response res) {
-        UserCreateDTO dto = new UserCreateDTO();
+        PersonCreateDTO dto = new PersonCreateDTO();
         dto.name     = req.queryParams("name");
         dto.password = req.queryParams("password");
 
     try {
-        userService.createUser(dto);
+        authService.createUser(dto);
         req.session(true).attribute("currentUserUsername", dto.name);
         req.session().attribute("loggedIn", true);
         res.redirect("/user/created?name=" + encode(dto.name));
@@ -103,12 +103,12 @@ public class UserController {
     // POST /login — procesa la autenticación
     // -----------------------------------------------------------
     public String login(Request req, Response res) {
-        UserLoginDTO dto = new UserLoginDTO();
+        PersonLoginDTO dto = new PersonLoginDTO();
         dto.username = req.queryParams("username");
         dto.password = req.queryParams("password");
 
         try {
-            User user = userService.login(dto);
+            User user = authService.login(dto);
 
             // Sesión exitosa: guardamos los datos necesarios
             req.session(true).attribute("currentUserUsername", user.getName());
