@@ -8,10 +8,6 @@ import org.javalite.activejdbc.annotations.Table;
 @Table("persons")
 public class Person extends Model {
 
-    public Integer getId() {
-        return getInteger("id");
-    }
-
     public String getDni() {
         return getString("dni");
     }

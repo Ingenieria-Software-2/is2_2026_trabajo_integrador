@@ -8,11 +8,8 @@ import org.javalite.activejdbc.annotations.BelongsTo;
 @BelongsTo(parent = Person.class, foreignKeyName = "person_id")
 public class Administrator extends Model {
 
-    // -------------------------
-    // Relationship
-    // -------------------------
-
     public Person getPerson() {
         return this.parent(Person.class);
     }
+
 }
