@@ -77,26 +77,14 @@ public class ProfessorService {
     // -----------------------------------------------------------
     private Professor persist(ProfessorCreateDTO dto, Integer dni) {
         Person person = new Person();
-        person.setNombre(dto.nombre);
-        person.setApellido(dto.apellido);
-        person.setMail(dto.mail);
-        person.setDni(dni);
+        person.setName(dto.nombre);
+        person.setSurname(dto.apellido);
+        person.setEmail(dto.mail);
+        person.setDni(dto.dniStr);
         person.saveIt(); // genera el ID que usará Professor
 
         Professor professor = new Professor();
         professor.set("person_id", person.getId());
-
-        if (!isBlank(dto.legajoStr)) {
-            try {
-                professor.setLegajo(Integer.parseInt(dto.legajoStr));
-            } catch (NumberFormatException e) {
-                throw new ServiceException(
-                    "El legajo debe ser un número válido.", 400);
-            }
-        }
-        if (!isBlank(dto.titulo))      professor.setTitulo(dto.titulo);
-        if (!isBlank(dto.universidad)) professor.setUniversidadGraduado(dto.universidad);
-        if (!isBlank(dto.cargo))       professor.setCargo(dto.cargo);
 
         professor.saveIt();
         return professor;
