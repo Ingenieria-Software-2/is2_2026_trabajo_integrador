@@ -91,4 +91,12 @@ public class Person extends Model {
     public Administrator getAdministrator() {
         return Administrator.findFirst("person_id = ?", getId());
     }
+
+    public boolean isAdmin() {
+        return PersonRole.findFirst(
+            "person_id = ? AND role = ?",
+            getId(),
+            Role.ADMIN.name()
+        ) != null;
+    }
 }
