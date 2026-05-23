@@ -1,7 +1,7 @@
 package com.is1.proyecto.routes;
 
-import com.is1.proyecto.controllers.UserController;
-import com.is1.proyecto.services.UserService;
+import com.is1.proyecto.controllers.AuthController;
+import com.is1.proyecto.services.AuthService;
 import spark.template.mustache.MustacheTemplateEngine;
 
 import static spark.Spark.get;
@@ -9,12 +9,12 @@ import static spark.Spark.post;
 
 public class UserRoutes {
 
-    private final UserController controller;
+    private final AuthController controller;
 
     public UserRoutes() {
-        UserService service = new UserService();
+        AuthService service = new AuthService();
         MustacheTemplateEngine templateEngine = new MustacheTemplateEngine();
-        this.controller = new UserController(service, templateEngine);
+        this.controller = new AuthController(service, templateEngine);
     }
 
     public void register() {

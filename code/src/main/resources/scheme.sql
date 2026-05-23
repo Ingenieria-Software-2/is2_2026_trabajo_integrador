@@ -1,46 +1,85 @@
--- Elimina la tabla 'users' si ya existe para asegurar un inicio limpio
-DROP TABLE IF EXISTS users;
-
--- Crea la tabla 'users' con los campos originales, adaptados para SQLite
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, -- Clave primaria autoincremental para SQLite
-    name TEXT NOT NULL UNIQUE,          -- Nombre de usuario (TEXT es el tipo de cadena recomendado para SQLite), con restricción UNIQUE
-    password TEXT NOT NULL           -- Contraseña hasheada (TEXT es el tipo de cadena recomendado para SQLite)
-);
-
--- Elimina la tabla 'persons' si ya existe para asegurar un inicio limpio
+DROP TABLE IF EXISTS person_roles;
+DROP TABLE IF EXISTS administrators;
+DROP TABLE IF EXISTS professors;
+DROP TABLE IF EXISTS students;
 DROP TABLE IF EXISTS persons;
 
--- Crea la tabla 'persons' con los campos originales, adaptados para SQLite
+-- =============================================================
+-- PERSONS — base table (superclass)
+-- Contains all common attributes including authentication fields
+-- =============================================================
 CREATE TABLE persons (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, -- Clave primaria autoincremental para SQLite
-    -- Campos de persona (obligatorios en el formulario)
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    dni VARCHAR(20) NOT NULL UNIQUE,
-    mail VARCHAR(100) NOT NULL UNIQUE,
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    dni         TEXT    NOT NULL UNIQUE,  -- TEXT: avoids leading zero issues
+    name        TEXT       NOT NULL,
+    surname     TEXT       NOT NULL,
+    username    TEXT       NOT NULL UNIQUE,
+    password    TEXT       NOT NULL,
+    cellphone   TEXT,
+    birthdate   DATE,
+    email       TEXT       NOT NULL UNIQUE,
 
-    -- Campos requeridos por ActiveJDBC para seguimiento
-    created_at DATETIME,
-    updated_at DATETIME
+    created_at  DATETIME,
+    updated_at  DATETIME
 );
 
--- Elimina la tabla 'professors' si ya existe para asegurar un inicio limpio
-DROP TABLE IF EXISTS professors;
+-- =============================================================
+-- PERSON_ROLES — many roles per person
+-- A person can be PROFESSOR and STUDENT simultaneously
+-- =============================================================
+CREATE TABLE person_roles (
+    person_id   INTEGER NOT NULL,
+    role        TEXT    NOT NULL CHECK(role IN ('ADMIN', 'PROFESSOR', 'STUDENT')),
 
--- Crea la tabla 'professors' con los campos originales, adaptados para SQLite
+    PRIMARY KEY (person_id, role),
+    FOREIGN KEY (person_id) REFERENCES persons(id)
+);
+
+-- =============================================================
+-- PROFESSORS — subclass of Person
+-- Only stores attributes specific to Professor
+-- =============================================================
 CREATE TABLE professors (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id       INTEGER NOT NULL UNIQUE,
+    degree          TEXT,
+    graduate_univ   TEXT,
+    position        TEXT,
 
-    person_id INTEGER NOT NULL UNIQUE,
-    legajo VARCHAR(100) UNIQUE,
-    titulo VARCHAR(100),
-    univ_grad VARCHAR(200),
-    cargo VARCHAR(200),
+    created_at      DATETIME,
+    updated_at      DATETIME,
 
-    -- Campos requeridos por ActiveJDBC para seguimiento
-    created_at DATETIME,
-    updated_at DATETIME,
+    FOREIGN KEY (person_id) REFERENCES persons(id)
+);
 
-    FOREIGN KEY (person_id) REFERENCES persons (id) -- Clave foránea que hace referencia a persona, de la cual hereda profesor
+-- =============================================================
+-- STUDENTS — subclass of Person
+-- Only stores attributes specific to Student
+-- =============================================================
+CREATE TABLE students (
+    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id           INTEGER NOT NULL UNIQUE,
+    birthplace          TEXT,
+    town_of_residence   TEXT,
+    contact_relative    TEXT,
+    contact_cellphone   TEXT,
+
+    created_at          DATETIME,
+    updated_at          DATETIME,
+
+    FOREIGN KEY (person_id) REFERENCES persons(id)
+);
+
+-- =============================================================
+-- ADMINISTRATORS — subclass of Person
+-- No extra attributes, only the FK to persons
+-- =============================================================
+CREATE TABLE administrators (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id   INTEGER NOT NULL UNIQUE,
+
+    created_at  DATETIME,
+    updated_at  DATETIME,
+
+    FOREIGN KEY (person_id) REFERENCES persons(id)
 );
