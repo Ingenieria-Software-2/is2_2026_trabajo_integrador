@@ -1,6 +1,5 @@
 package com.is1.proyecto.controllers;
-
-import com.is1.proyecto.models.User;
+import com.is1.proyecto.models.Person;
 import com.is1.proyecto.services.ServiceException;
 import com.is1.proyecto.services.AuthService;
 import com.is1.proyecto.services.dto.PersonCreateDTO;
@@ -77,28 +76,52 @@ public class AuthController {
     // POST /user/new — procesa el registro
     // -----------------------------------------------------------
     public String create(Request req, Response res) {
+
         PersonCreateDTO dto = new PersonCreateDTO();
-        dto.name     = req.queryParams("name");
-        dto.password = req.queryParams("password");
 
-    try {
-        authService.createUser(dto);
-        req.session(true).attribute("currentUserUsername", dto.name);
-        req.session().attribute("loggedIn", true);
-        res.redirect("/user/created?name=" + encode(dto.name));
+        dto.dni        = req.queryParams("dni");
+        dto.name       = req.queryParams("name");
+        dto.surname    = req.queryParams("surname");
+        dto.username   = req.queryParams("username");
+        dto.email      = req.queryParams("email");
+        dto.cellphone  = req.queryParams("cellphone");
+        dto.birthdate  = req.queryParams("birthdate");
+        dto.password   = req.queryParams("password");
 
-    } catch (ServiceException e) {
-        res.status(e.getStatusCode());
-        res.redirect("/user/create?error=" + encode(e.getMessage()));
+        try {
 
-    } catch (Exception e) {
-        res.status(500);
-        res.redirect("/user/create?error=" + encode("Error interno. Intente de nuevo."));
-    }
+            Person person = authService.createAdministrator(dto);
+
+            req.session(true)
+                .attribute("currentUserUsername",
+                        person.getUsername());
+
+            req.session()
+                .attribute("userId", person.getId());
+
+            req.session()
+                .attribute("loggedIn", true);
+
+            res.redirect("/user/created?name="
+                + encode(person.getName()));
+
+        } catch (ServiceException e) {
+
+            res.status(e.getStatusCode());
+
+            res.redirect("/user/create?error="
+                + encode(e.getMessage()));
+
+        } catch (Exception e) {
+
+            res.status(500);
+
+            res.redirect("/user/create?error="
+                + encode("Error interno. Intente de nuevo."));
+        }
 
         return "";
     }
-
     // -----------------------------------------------------------
     // POST /login — procesa la autenticación
     // -----------------------------------------------------------
@@ -108,15 +131,15 @@ public class AuthController {
         dto.password = req.queryParams("password");
 
         try {
-            User user = authService.login(dto);
+            Person person = authService.login(dto);
 
             // Sesión exitosa: guardamos los datos necesarios
-            req.session(true).attribute("currentUserUsername", user.getName());
-            req.session().attribute("userId", user.getId());
+            req.session(true).attribute("currentUserUsername", person.getUsername());
+            req.session().attribute("userId", person.getId());
             req.session().attribute("loggedIn", true);
 
             Map<String, Object> model = new HashMap<>();
-            model.put("username", user.getName());
+            model.put("username", person.getUsername());
             return templateEngine.render(
                 new ModelAndView(model, "dashboard.mustache"));
 
