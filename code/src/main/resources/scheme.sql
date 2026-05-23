@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS administrators;
 DROP TABLE IF EXISTS professors;
 DROP TABLE IF EXISTS students;
 DROP TABLE IF EXISTS persons;
-DROP TABLE IF EXISTS users;
 
 -- =============================================================
 -- PERSONS — base table (superclass)
@@ -11,7 +10,7 @@ DROP TABLE IF EXISTS users;
 -- =============================================================
 CREATE TABLE persons (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    dni         INTEGER    NOT NULL UNIQUE,  -- TEXT: avoids leading zero issues
+    dni         TEXT    NOT NULL UNIQUE,  -- TEXT: avoids leading zero issues
     name        TEXT       NOT NULL,
     surname     TEXT       NOT NULL,
     username    TEXT       NOT NULL UNIQUE,
