@@ -4,6 +4,7 @@ import com.is1.proyecto.services.ServiceException;
 import com.is1.proyecto.services.AuthService;
 import com.is1.proyecto.services.dto.PersonCreateDTO;
 import com.is1.proyecto.services.dto.PersonLoginDTO;
+import com.is1.proyecto.validators.UserValidator;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -11,6 +12,8 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +23,7 @@ public class AuthController {
     private final MustacheTemplateEngine templateEngine;
 
     public AuthController(AuthService authService,
-                          MustacheTemplateEngine templateEngine) {
+                            MustacheTemplateEngine templateEngine) {
         this.authService = authService;
         this.templateEngine = templateEngine;
     }
@@ -89,6 +92,12 @@ public class AuthController {
         dto.password   = req.queryParams("password");
 
         try {
+
+            UserValidator.validate(dto);
+            
+            // -----------------------------------------------------------
+            // CREACIÓN
+            // -----------------------------------------------------------
 
             Person person = authService.createAdministrator(dto);
 

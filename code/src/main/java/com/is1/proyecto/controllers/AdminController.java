@@ -25,5 +25,5 @@ public class AdminController {
         this.templateEngine = templateEngine;
     }
 
- 
+
 }

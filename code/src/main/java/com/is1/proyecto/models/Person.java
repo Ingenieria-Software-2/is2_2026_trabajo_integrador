@@ -80,7 +80,7 @@ public class Person extends Model {
     // Relationships
     // -------------------------
 
-      public Professor getProfessor() {
+    public Professor getProfessor() {
         return Professor.findFirst("person_id = ?", getId());
     }
 
