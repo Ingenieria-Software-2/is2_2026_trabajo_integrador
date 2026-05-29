@@ -1,14 +1,8 @@
-DROP TABLE IF EXISTS person_roles;
-DROP TABLE IF EXISTS administrators;
-DROP TABLE IF EXISTS professors;
-DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS persons;
-
 -- =============================================================
 -- PERSONS — base table (superclass)
 -- Contains all common attributes including authentication fields
 -- =============================================================
-CREATE TABLE persons (
+CREATE TABLE IF NOT EXISTS persons (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     dni         TEXT    NOT NULL UNIQUE,  -- TEXT: avoids leading zero issues
     name        TEXT       NOT NULL,
@@ -27,7 +21,7 @@ CREATE TABLE persons (
 -- PERSON_ROLES — many roles per person
 -- A person can be PROFESSOR and STUDENT simultaneously
 -- =============================================================
-CREATE TABLE person_roles (
+CREATE TABLE IF NOT EXISTS person_roles (
     person_id   INTEGER NOT NULL,
     role        TEXT    NOT NULL CHECK(role IN ('ADMIN', 'PROFESSOR', 'STUDENT')),
 
@@ -39,7 +33,7 @@ CREATE TABLE person_roles (
 -- PROFESSORS — subclass of Person
 -- Only stores attributes specific to Professor
 -- =============================================================
-CREATE TABLE professors (
+CREATE TABLE IF NOT EXISTS professors (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     person_id       INTEGER NOT NULL UNIQUE,
     degree          TEXT,
@@ -56,7 +50,7 @@ CREATE TABLE professors (
 -- STUDENTS — subclass of Person
 -- Only stores attributes specific to Student
 -- =============================================================
-CREATE TABLE students (
+CREATE TABLE IF NOT EXISTS students (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
     person_id           INTEGER NOT NULL UNIQUE,
     birthplace          TEXT,
@@ -74,7 +68,7 @@ CREATE TABLE students (
 -- ADMINISTRATORS — subclass of Person
 -- No extra attributes, only the FK to persons
 -- =============================================================
-CREATE TABLE administrators (
+CREATE TABLE IF NOT EXISTS administrators (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     person_id   INTEGER NOT NULL UNIQUE,
 
