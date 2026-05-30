@@ -9,6 +9,11 @@ public class ProfessorService {
     private static final String EMAIL_REGEX =
         "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*" +
         "@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+    private final AuthService authService;
+
+    public ProfessorService() {
+        this.authService = new AuthService();
+    }
 
     // -----------------------------------------------------------
     // Método público principal: recibe un DTO, devuelve el Professor creado.
@@ -19,75 +24,30 @@ public class ProfessorService {
         // PASO 1: Validar campos obligatorios y formatos
         validateFields(dto);
 
-        // PASO 2: Verificar que DNI y mail no estén ya registrados
-        Integer dni = parseDni(dto.dni);
-        checkUniqueness(dto.email, dni);
+        // PASO 2: AuthService crea: Person, PersonRole(PROFESSOR), Professor
+        Person person = authService.createPerson(dto);
 
-        // PASO 3: Persistir en orden (primero Person, después Professor)
-        return persist(dto, dni);
+        // PASO 3: Recuperamos el Professor creado por AuthService
+        Professor.update("degree = ?, graduate_univ = ?, position = ?", "person_id = ?", dto.degree,
+                    dto.university, dto.position, person.getLongId());
+
+        return Professor.findFirst("person_id = ?", person.getLongId());
     }
 
     // -----------------------------------------------------------
-    // PASO 1: Validaciones de formato y presencia
+    // Validaciones de formato y presencia
     // Lanza ServiceException(400) si algo está mal.
     // -----------------------------------------------------------
     private void validateFields(ProfessorCreateDTO dto) {
-        if (isBlank(dto.name) || isBlank(dto.surname)
-                || isBlank(dto.email) || isBlank(dto.dni)) {
+        if (isBlank(dto.name) || isBlank(dto.surname) || isBlank(dto.email) || isBlank(dto.dni)
+            || isBlank(dto.username) || isBlank(dto.password)) {
             throw new ServiceException(
                 "Todos los campos obligatorios son requeridos.", 400);
         }
 
         if (!dto.email.matches(EMAIL_REGEX)) {
-            throw new ServiceException(
-                "El formato del email no es válido.", 400);
+            throw new ServiceException("El formato del email no es válido.", 400);
         }
-    }
-
-    // -----------------------------------------------------------
-    // Parsea el DNI a Integer. Separado porque también lo usa checkUniqueness.
-    // Lanza ServiceException(400) si no es un número.
-    // -----------------------------------------------------------
-    private Integer parseDni(String dniStr) {
-        try {
-            return Integer.parseInt(dniStr);
-        } catch (NumberFormatException e) {
-            throw new ServiceException("El DNI debe ser un número válido.", 400);
-        }
-    }
-
-    // -----------------------------------------------------------
-    // PASO 2: Consulta al modelo si ya existen esos datos únicos.
-    // Lanza ServiceException(409 Conflict) si están duplicados.
-    // -----------------------------------------------------------
-    private void checkUniqueness(String mail, Integer dni) {
-        if (Person.findFirst("mail = ?", mail) != null) {
-            throw new ServiceException(
-                "El email ya está registrado en el sistema.", 409);
-        }
-        if (Person.findFirst("dni = ?", dni) != null) {
-            throw new ServiceException(
-                "El DNI ya está registrado en el sistema.", 409);
-        }
-    }
-
-    // -----------------------------------------------------------
-    // PASO 3: Persiste Person y luego Professor.
-    // El orden importa: Professor necesita el ID de Person.
-    // -----------------------------------------------------------
-    private Professor persist(ProfessorCreateDTO dto, Integer dni) {
-        Person person = new Person();
-        person.setName(dto.name);
-        person.setSurname(dto.surname);
-        person.setEmail(dto.email);
-        person.setDni(dto.dni);
-        person.saveIt(); // genera el ID que usará Professor
-
-        Professor professor = new Professor();
-        professor.set("person_id", person.getId());
-
-        professor.saveIt();
-        return professor;
     }
 
     // -----------------------------------------------------------
