@@ -1,5 +1,7 @@
 package com.is1.proyecto.services.dto;
 
+import com.is1.proyecto.models.Role;
+
 public class PersonCreateDTO {
 
     public String dni;
@@ -10,4 +12,5 @@ public class PersonCreateDTO {
     public String email;
     public String cellphone;
     public String birthdate;
+    public Role role;
 }

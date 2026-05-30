@@ -8,6 +8,10 @@ import org.javalite.activejdbc.annotations.Table;
 @Table("persons")
 public class Person extends Model {
 
+    // -------------------------------------------
+    // Basic Information
+    // -------------------------------------------
+
     public String getDni() {
         return getString("dni");
     }
@@ -56,9 +60,9 @@ public class Person extends Model {
         set("email", email);
     }
 
-    // -------------------------
+    // -------------------------------------------
     // Authentication
-    // -------------------------
+    // -------------------------------------------
 
     public String getUsername() {
         return getString("username");
@@ -76,9 +80,9 @@ public class Person extends Model {
         set("password", password);
     }
 
-    // -------------------------
+    // -------------------------------------------
     // Relationships
-    // -------------------------
+    // -------------------------------------------
 
     public Professor getProfessor() {
         return Professor.findFirst("person_id = ?", getId());
@@ -92,11 +96,22 @@ public class Person extends Model {
         return Administrator.findFirst("person_id = ?", getId());
     }
 
+    // -------------------------------------------
+    // Roles
+    // -------------------------------------------
+    public boolean hasRole(Role role) {
+        return PersonRole.findFirst("person_id = ? AND role = ?", getId(), role.name()) != null;
+    }
+
     public boolean isAdmin() {
-        return PersonRole.findFirst(
-            "person_id = ? AND role = ?",
-            getId(),
-            Role.ADMIN.name()
-        ) != null;
+        return hasRole(Role.ADMIN);
+    }
+
+    public boolean isProfessor() {
+        return hasRole(Role.PROFESSOR);
+    }
+
+    public boolean isStudent() {
+        return hasRole(Role.STUDENT);
     }
 }

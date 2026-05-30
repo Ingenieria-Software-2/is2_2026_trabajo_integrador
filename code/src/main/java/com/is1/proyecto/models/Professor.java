@@ -8,9 +8,25 @@ import org.javalite.activejdbc.annotations.BelongsTo;
 @BelongsTo(parent = Person.class, foreignKeyName = "person_id")
 public class Professor extends Model {
 
+    // ------------------------------------------------------
+    // Relationship
+    // ------------------------------------------------------
+    
     public Person getPerson() {
         return this.parent(Person.class);
     }
+
+    public void setPersonId(Long personId) {
+        set("person_id", personId); 
+    }
+
+    public Long getPersonId() {
+        return getLong("person_id");
+    }
+
+    // ------------------------------------------------------
+    // Academic Information
+    // ------------------------------------------------------
 
     public String getDegree() {
         return getString("degree");
@@ -35,4 +51,6 @@ public class Professor extends Model {
     public void setPosition(String position) {
         set("position", position);
     }
+    
+
 }

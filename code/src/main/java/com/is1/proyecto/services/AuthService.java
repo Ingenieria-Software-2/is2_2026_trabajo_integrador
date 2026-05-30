@@ -3,10 +3,11 @@ package com.is1.proyecto.services;
 import com.is1.proyecto.models.Administrator;
 import com.is1.proyecto.models.Person;
 import com.is1.proyecto.models.PersonRole;
-import com.is1.proyecto.models.Role;
-
+import com.is1.proyecto.models.Professor;
+import com.is1.proyecto.models.Student;
 import com.is1.proyecto.services.dto.PersonCreateDTO;
 import com.is1.proyecto.services.dto.PersonLoginDTO;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class AuthService {
@@ -16,34 +17,13 @@ public class AuthService {
     // Devuelve la Person creada.
     // -----------------------------------------------------------
     public Person createPerson(PersonCreateDTO dto) {
-        validateFields(dto.name, dto.password);
-        checkUsernameAvailable(dto.name);
-
-        Person person = new Person();  
-        person.setDni(dto.dni);
-        person.setName(dto.name);
-        person.setSurname(dto.surname);
-        person.setUsername(dto.username);
-        person.setEmail(dto.email);
-        person.setCellphone(dto.cellphone);
-        person.setBirthdate(dto.birthdate);
-
-        person.setPassword(
-            BCrypt.hashpw(dto.password, BCrypt.gensalt())
-        );
-        person.saveIt();
-
-        return person;
-    }
-    //Temporalmente tendremos createAdministrator en el AuthService
-    //Más adelante deberá ser un AdminService para respetar separacion de
-    // responsabilidades de la capa de servicios
-    public Person createAdministrator(PersonCreateDTO dto) {
 
         validateFields(dto.username, dto.password);
-
         checkUsernameAvailable(dto.username);
 
+        // -------------------------------------------------------
+        // PERSON
+        // -------------------------------------------------------
         Person person = new Person();
 
         person.setDni(dto.dni);
@@ -57,39 +37,67 @@ public class AuthService {
         person.setPassword(
             BCrypt.hashpw(dto.password, BCrypt.gensalt())
         );
-
         person.saveIt();
 
-        // -------------------------
-        // ROLE
-        // -------------------------
+        Person savedPerson = Person.findFirst("username = ?", dto.username);
+        if (savedPerson == null) {
+            throw new ServiceException("No se pudo recuperar la persona recién creada.", 500);
+        }
 
+        Long personId = savedPerson.getLongId();
+
+        // -------------------------------------------------------
+        // ROLE
+        // -------------------------------------------------------
         PersonRole personRole = new PersonRole();
 
-        personRole.setPersonId(person.getId());
-        personRole.setRole(Role.ADMIN);
-
+        personRole.setPersonId(personId);
+        personRole.setRole(dto.role);
         personRole.saveIt();
 
-        // -------------------------
-        // ADMINISTRATOR
-        // -------------------------
+        // -------------------------------------------------------
+        // SUBCLASS TABLE
+        // -------------------------------------------------------
+        switch (dto.role) {
 
-        Administrator administrator = new Administrator();
+            case ADMIN -> {
 
-        administrator.set("person_id", person.getId());
+                Administrator administrator = new Administrator();
+                administrator.setPersonId(personId);;
+                administrator.saveIt();
+            }
 
-        administrator.saveIt();
+            case PROFESSOR -> {
+
+                Professor professor = new Professor();
+                professor.setPersonId(personId);;
+                professor.saveIt();
+            }
+
+            case STUDENT -> {
+                Student student = new Student();
+                student.setPersonId(personId);;
+                student.saveIt();
+            }
+
+            default -> {
+                throw new ServiceException("Rol inválido", 400);
+            }
+        }
 
         return person;
     }
+
+
     // -----------------------------------------------------------
+    // LOGIN
     // Autentica un usuario.
     // Devuelve la Person si las credenciales son correctas.
     // Lanza ServiceException en cualquier caso de fallo
     // (mensaje genérico para no dar pistas de seguridad).
     // -----------------------------------------------------------
     public Person login(PersonLoginDTO dto) {
+        
         validateFields(dto.username, dto.password);
 
         Person person = Person.findFirst("username = ?", dto.username);
@@ -104,9 +112,10 @@ public class AuthService {
     }
 
     // -----------------------------------------------------------
-    // Valida que username y contraseña no sean nulos ni vacíos.
+    // VALIDACIONES
     // -----------------------------------------------------------
     private void validateFields(String username, String password) {
+        
         if (isBlank(username) || isBlank(password)) {
             throw new ServiceException(
                 "Nombre y contraseña son requeridos.", 400);
@@ -117,6 +126,7 @@ public class AuthService {
     // Verifica que el username de la Persona no esté tomado.
     // -----------------------------------------------------------
     private void checkUsernameAvailable(String username) {
+        
         if (Person.findFirst("username = ?", username) != null) {
             throw new ServiceException(
                 "El nombre de usuario ya está en uso.", 409);
