@@ -20,8 +20,8 @@ public class ProfessorService {
         validateFields(dto);
 
         // PASO 2: Verificar que DNI y mail no estén ya registrados
-        Integer dni = parseDni(dto.dniStr);
-        checkUniqueness(dto.mail, dni);
+        Integer dni = parseDni(dto.dni);
+        checkUniqueness(dto.email, dni);
 
         // PASO 3: Persistir en orden (primero Person, después Professor)
         return persist(dto, dni);
@@ -32,13 +32,13 @@ public class ProfessorService {
     // Lanza ServiceException(400) si algo está mal.
     // -----------------------------------------------------------
     private void validateFields(ProfessorCreateDTO dto) {
-        if (isBlank(dto.nombre) || isBlank(dto.apellido)
-                || isBlank(dto.mail) || isBlank(dto.dniStr)) {
+        if (isBlank(dto.name) || isBlank(dto.surname)
+                || isBlank(dto.email) || isBlank(dto.dni)) {
             throw new ServiceException(
                 "Todos los campos obligatorios son requeridos.", 400);
         }
 
-        if (!dto.mail.matches(EMAIL_REGEX)) {
+        if (!dto.email.matches(EMAIL_REGEX)) {
             throw new ServiceException(
                 "El formato del email no es válido.", 400);
         }
@@ -77,10 +77,10 @@ public class ProfessorService {
     // -----------------------------------------------------------
     private Professor persist(ProfessorCreateDTO dto, Integer dni) {
         Person person = new Person();
-        person.setName(dto.nombre);
-        person.setSurname(dto.apellido);
-        person.setEmail(dto.mail);
-        person.setDni(dto.dniStr);
+        person.setName(dto.name);
+        person.setSurname(dto.surname);
+        person.setEmail(dto.email);
+        person.setDni(dto.dni);
         person.saveIt(); // genera el ID que usará Professor
 
         Professor professor = new Professor();

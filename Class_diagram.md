@@ -1,11 +1,11 @@
-``` mermaid
+::: mermaid
 classDiagram
     class Person {
         +String dni
         +String name
         +String surname
-        +username
-        +password
+        +String username
+        +String password
         +String cellphone
         +Date birthdate
         +String email
@@ -86,4 +86,4 @@ classDiagram
     %% Student-Degree Relationship
     Student "1" -- "1..*" Registration_Degree
     Registration_Degree "*" -- "1" Degree
-```
+:::

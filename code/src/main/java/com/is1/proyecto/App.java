@@ -74,8 +74,7 @@ public class App {
         try {
             dbConfig.openConnection();
 
-            InputStream is = App.class.getClassLoader()
-                                      .getResourceAsStream("scheme.sql");
+            InputStream is = App.class.getClassLoader().getResourceAsStream("scheme.sql");
 
             if (is == null) {
                 throw new IOException("scheme.sql no encontrado en el classpath.");

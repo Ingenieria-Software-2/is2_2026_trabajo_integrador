@@ -12,4 +12,11 @@ public class Administrator extends Model {
         return this.parent(Person.class);
     }
 
+    public void setPersonId(Long personId) {
+        set("person_id", personId);
+    }
+    
+    public Long getPersonId() {
+        return getLong("person_id");
+    }
 }

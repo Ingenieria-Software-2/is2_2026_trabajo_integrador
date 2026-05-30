@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS person_roles (
 
     PRIMARY KEY (person_id, role),
     FOREIGN KEY (person_id) REFERENCES persons(id)
+    ON DELETE CASCADE
 );
 
 -- =============================================================
@@ -34,8 +35,7 @@ CREATE TABLE IF NOT EXISTS person_roles (
 -- Only stores attributes specific to Professor
 -- =============================================================
 CREATE TABLE IF NOT EXISTS professors (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    person_id       INTEGER NOT NULL UNIQUE,
+    person_id       INTEGER PRIMARY KEY,
     degree          TEXT,
     graduate_univ   TEXT,
     position        TEXT,
@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS professors (
     updated_at      DATETIME,
 
     FOREIGN KEY (person_id) REFERENCES persons(id)
+    ON DELETE CASCADE
 );
 
 -- =============================================================
@@ -51,8 +52,7 @@ CREATE TABLE IF NOT EXISTS professors (
 -- Only stores attributes specific to Student
 -- =============================================================
 CREATE TABLE IF NOT EXISTS students (
-    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    person_id           INTEGER NOT NULL UNIQUE,
+    person_id           INTEGER PRIMARY KEY,
     birthplace          TEXT,
     town_of_residence   TEXT,
     contact_relative    TEXT,
@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS students (
     updated_at          DATETIME,
 
     FOREIGN KEY (person_id) REFERENCES persons(id)
+    ON DELETE CASCADE
 );
 
 -- =============================================================
@@ -69,11 +70,11 @@ CREATE TABLE IF NOT EXISTS students (
 -- No extra attributes, only the FK to persons
 -- =============================================================
 CREATE TABLE IF NOT EXISTS administrators (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    person_id   INTEGER NOT NULL UNIQUE,
+    person_id   INTEGER PRIMARY KEY,
 
     created_at  DATETIME,
     updated_at  DATETIME,
 
     FOREIGN KEY (person_id) REFERENCES persons(id)
+    ON DELETE CASCADE
 );
