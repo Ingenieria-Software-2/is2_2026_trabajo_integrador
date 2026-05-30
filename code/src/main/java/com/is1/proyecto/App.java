@@ -1,8 +1,7 @@
 package com.is1.proyecto;
 
 import com.is1.proyecto.config.DBConfigSingleton;
-import com.is1.proyecto.routes.ProfessorRoutes;
-import com.is1.proyecto.routes.UserRoutes;
+import com.is1.proyecto.routes.*;
 
 import org.javalite.activejdbc.Base;
 
@@ -32,6 +31,7 @@ public class App {
         // 5. Registro de rutas
         new UserRoutes().register();
         new ProfessorRoutes().register();
+        new SubjectRoutes().register();
     }
 
     // -----------------------------------------------------------
