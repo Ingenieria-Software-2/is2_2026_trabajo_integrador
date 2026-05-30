@@ -59,6 +59,9 @@ public class ProfessorController extends BaseController {
 
         } catch (Exception e) {
 
+            System.out.println("ERROR PROFESOR:");
+            e.printStackTrace();
+
             res.status(500);
             res.redirect("/professor/create?error=" + encode("Error interno. Intente de nuevo."));
         }

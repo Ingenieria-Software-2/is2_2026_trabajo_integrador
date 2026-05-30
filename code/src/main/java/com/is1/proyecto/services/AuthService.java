@@ -63,20 +63,20 @@ public class AuthService {
             case ADMIN -> {
 
                 Administrator administrator = new Administrator();
-                administrator.setPersonId(personId);;
+                administrator.setPersonId(personId);
                 administrator.saveIt();
             }
 
             case PROFESSOR -> {
 
                 Professor professor = new Professor();
-                professor.setPersonId(personId);;
+                professor.setPersonId(personId);
                 professor.saveIt();
             }
 
             case STUDENT -> {
                 Student student = new Student();
-                student.setPersonId(personId);;
+                student.setPersonId(personId);
                 student.saveIt();
             }
 
@@ -85,7 +85,7 @@ public class AuthService {
             }
         }
 
-        return person;
+        return savedPerson;
     }
 
 
