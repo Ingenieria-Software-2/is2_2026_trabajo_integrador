@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS administrators (
 -- =============================================================
 -- SUBJECTS
 -- =============================================================
-CREATE TABLE subjects (
+CREATE TABLE IF NOT EXISTS subjects (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     code            INTEGER NOT NULL UNIQUE,
     name            TEXT    NOT NULL,

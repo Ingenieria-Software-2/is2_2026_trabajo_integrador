@@ -86,13 +86,15 @@
             </a>
         </div>
 
-        <!-- Botón de Cerrar Sesión (al final) -->
+        <!-- Cerrar sesión — POST para seguridad -->
         <div class="text-center mt-8">
-            <a href="/logout" class="inline-block bg-red-600 text-white py-2 px-6 rounded-full font-medium hover:bg-red-700 transition duration-300 text-lg shadow-md">
-                Cerrar Sesión
-            </a>
+            <form action="/logout" method="post">
+                <button type="submit"
+                        class="inline-block bg-red-600 text-white py-2 px-6 rounded-full font-medium hover:bg-red-700 transition duration-300 text-lg shadow-md">
+                    Cerrar Sesión
+                </button>
+            </form>
         </div>
-    </div>
 
 </body>
 </html>
