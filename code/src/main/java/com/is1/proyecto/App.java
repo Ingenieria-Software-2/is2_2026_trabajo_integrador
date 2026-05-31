@@ -1,7 +1,11 @@
 package com.is1.proyecto;
 
 import com.is1.proyecto.config.DBConfigSingleton;
+import com.is1.proyecto.controllers.AdminController;
 import com.is1.proyecto.routes.*;
+import com.is1.proyecto.services.AuthService;
+
+import spark.template.mustache.MustacheTemplateEngine;
 
 import org.javalite.activejdbc.Base;
 
@@ -29,7 +33,14 @@ public class App {
         configureFilters(dbConfig);
 
         // 5. Registro de rutas
-        new UserRoutes().register();
+
+        // Dependencias compartidas
+        AuthService authService = new AuthService();
+        MustacheTemplateEngine templateEngine = new MustacheTemplateEngine();
+        AdminController adminController = new AdminController(authService, templateEngine);
+
+        new AuthRoutes(adminController).register();
+        new AdminRoutes(adminController).register();
         new ProfessorRoutes().register();
         new SubjectRoutes().register();
     }
