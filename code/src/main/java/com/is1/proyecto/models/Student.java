@@ -8,24 +8,24 @@ import org.javalite.activejdbc.annotations.BelongsTo;
 @BelongsTo(parent = Person.class, foreignKeyName = "person_id")
 public class Student extends Model {
 
-    // -------------------------
+    // ------------------------------------------------------
     // Relationship
-    // -------------------------
-
+    // ------------------------------------------------------
+    
     public Person getPerson() {
         return this.parent(Person.class);
     }
 
     public void setPersonId(Long personId) {
-        set("person_id", personId);
+        set("person_id", personId); 
     }
-    
+
     public Long getPersonId() {
         return getLong("person_id");
     }
     
     // -------------------------
-    // Personal data
+    // Student Information
     // -------------------------
 
     public String getBirthplace() {
@@ -40,14 +40,10 @@ public class Student extends Model {
         return getString("town_of_residence");
     }
 
-    public void setTownOfResidence(String townOfResidence) {
-        set("town_of_residence", townOfResidence);
+    public void setTownOfResidence(String town_of_residence) {
+        set("town_of_residence", town_of_residence);
     }
-
-    // -------------------------
-    // Emergency contact
-    // -------------------------
-
+    
     public String getContactRelative() {
         return getString("contact_relative");
     }
