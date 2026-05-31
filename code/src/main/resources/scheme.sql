@@ -92,3 +92,15 @@ CREATE TABLE IF NOT EXISTS subjects (
     created_at      DATETIME,
     updated_at      DATETIME
 );
+
+-- =============================================================
+-- CAREERS
+-- =============================================================
+CREATE TABLE IF NOT EXISTS careers (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    code        INTEGER NOT NULL UNIQUE,
+    name        TEXT    NOT NULL,
+ 
+    created_at  DATETIME,
+    updated_at  DATETIME
+);
